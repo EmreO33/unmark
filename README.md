@@ -1,6 +1,6 @@
 # Unmark
 
-Unmark — we erase stuff that big corpos won't.
+Unmark - we erase stuff that big corpos won't.
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](LICENSE)
 [![Build Status](https://img.shields.io/github/actions/workflow/status/EmreO33/unmark/build.yml)](https://github.com/EmreO33/unmark/actions)
