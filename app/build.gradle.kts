@@ -4,12 +4,12 @@ plugins {
 }
 
 android {
-    namespace = "com.unmark.eraser"
+    namespace = "com.unmark.app"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.unmark.eraser"
-        minSdk = 24
+        applicationId = "com.unmark.app"
+        minSdk = 29
         targetSdk = 34
         versionCode = 1
         versionName = "0.1.0"

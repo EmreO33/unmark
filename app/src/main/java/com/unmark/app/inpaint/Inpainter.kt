@@ -1,4 +1,4 @@
-package com.unmark.eraser.inpaint
+package com.unmark.app.inpaint
 
 import android.graphics.Bitmap
 import kotlinx.coroutines.Dispatchers

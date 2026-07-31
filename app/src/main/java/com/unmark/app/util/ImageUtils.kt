@@ -1,4 +1,4 @@
-package com.unmark.eraser.util
+package com.unmark.app.util
 
 import android.content.Context
 import android.graphics.Bitmap

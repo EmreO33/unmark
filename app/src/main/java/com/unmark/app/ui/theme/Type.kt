@@ -1,4 +1,4 @@
-package com.unmark.eraser.ui.theme
+package com.unmark.app.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

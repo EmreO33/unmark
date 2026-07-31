@@ -1,4 +1,4 @@
-package com.unmark.eraser.ui.theme
+package com.unmark.app.ui.theme
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme

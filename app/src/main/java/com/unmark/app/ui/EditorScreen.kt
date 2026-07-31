@@ -1,4 +1,4 @@
-package com.unmark.eraser.ui
+package com.unmark.app.ui
 
 import android.graphics.Bitmap
 import android.graphics.Canvas as AndroidCanvas
@@ -50,10 +50,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
-import com.unmark.eraser.R
-import com.unmark.eraser.inpaint.Inpainter
-import com.unmark.eraser.util.ImageStore
-import com.unmark.eraser.util.ImageUtils
+import com.unmark.app.R
+import com.unmark.app.inpaint.Inpainter
+import com.unmark.app.util.ImageStore
+import com.unmark.app.util.ImageUtils
 import kotlinx.coroutines.launch
 
 private data class Stroke(val points: List<Offset>, val radiusPx: Float)
