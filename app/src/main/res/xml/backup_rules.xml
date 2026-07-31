@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+   Unmark keeps no app data worth backing up (no accounts, no settings database).
+   This file exists only to satisfy Android's backup manifest requirement.
+-->
+<full-backup-content>
+</full-backup-content>

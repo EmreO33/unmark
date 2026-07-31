@@ -1,0 +1,19 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Simple eraser-over-photo glyph as a placeholder launcher icon. -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M28,30 L64,30 A6,6 0 0 1 70,36 L70,72 A6,6 0 0 1 64,78 L28,78 A6,6 0 0 1 22,72 L22,36 A6,6 0 0 1 28,30 Z" />
+    <path
+        android:fillColor="#7C5CFC"
+        android:pathData="M62,46 L86,70 A6,6 0 0 1 86,79 L79,86 A6,6 0 0 1 70,86 L46,62 Z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M32,40 L60,40 L60,46 L32,46 Z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M32,52 L52,52 L52,58 L32,58 Z" />
+</vector>

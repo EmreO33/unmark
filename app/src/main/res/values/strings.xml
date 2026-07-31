@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Unmark</string>
+
+    <string name="pick_image">Choose photo</string>
+    <string name="brush_hint">Paint over the watermark or object you want to remove</string>
+    <string name="erase">Erase</string>
+    <string name="erasing">Erasing…</string>
+    <string name="undo">Undo</string>
+    <string name="reset">Reset</string>
+    <string name="save">Save</string>
+    <string name="share">Share</string>
+    <string name="saved_confirmation">Saved to Pictures/Unmark</string>
+    <string name="brush_size">Brush size</string>
+    <string name="start_over">Start over</string>
+    <string name="no_image_selected">No photo selected yet</string>
+</resources>
