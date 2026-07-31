@@ -10,15 +10,15 @@ Unmark — we erase stuff that big corpos won't.
 In recent years, generative AI's have been on a high. Misinformation on the internet have skyrocketed also. To combat this, companies like Google, OpenAI, xAI and more have put watermarks on the images they generate. Some people (like me) do not like this. This tool lets you paint over a watermark and erase it, right on your phone. You select the mark yourself — there's no AI or model involved, just a small on-device algorithm (see [How it works](#how-it-works)).
 
 **Unmark does NOT:**
-- Circumvent copy protection. Invisible provenance metadata like SynthID is not removed — a lot of social media websites can still detect whether an image is AI-generated regardless of what Unmark does. This only removes the visible watermark from the pixels of the photo.
+- Circumvent copy protection. Invisible provenance metadata like SynthID is not removed - a lot of social media websites can still detect whether an image is AI-generated regardless of what Unmark does. This only removes the visible watermark from the pixels of the photo.
 - Upload your photos anywhere, nor collect your data
-- Require an account or internet connection — everything is processed entirely on your device. You could disconnect your internet and the app would still work.
+- Require an account or internet connection - everything is processed entirely on your device. You could disconnect your internet and the app would still work.
 
 ## Features
 
 - [x] On-device watermark/object removal (no cloud upload, no network permission)
 - [x] Manual brush selection tool with adjustable brush size
-- [x] Nearest-fill + smoothing inpainting — no AI/ML model, no native code
+- [x] Nearest-fill + smoothing inpainting -- no AI/ML model, no native code
 - [x] Undo last stroke / reset mask, non-destructive editing (original photo is never overwritten)
 - [x] Save to gallery or share result directly
 - [x] No ads, no trackers, no analytics
@@ -26,7 +26,7 @@ In recent years, generative AI's have been on a high. Misinformation on the inte
 
 ## Screenshots
 
-_Coming soon — not yet captured._
+_Coming soon - not yet captured._
 
 ## Installation
 
@@ -57,13 +57,13 @@ Output APK: `app/build/outputs/apk/debug/`
 
 ### Verifying builds
 
-No reproducible-build/signing setup yet — the only builds published right now are the unsigned debug
+No reproducible-build/signing setup yet - the only builds published right now are the unsigned debug
 APKs produced by the [GitHub Actions workflow](.github/workflows/build.yml) on every push, so you can
 compare the build log against the source at the same commit.
 
 ## How it works
 
-Unmark uses a small, pure-Kotlin inpainting algorithm — there's no AI/ML model, no bundled weights,
+Unmark uses a small, pure-Kotlin inpainting algorithm - there's no AI/ML model, no bundled weights,
 and no native (C/C++) code. See [`Inpainter.kt`](app/src/main/java/com/unmark/app/inpaint/Inpainter.kt):
 
 1. **Nearest-fill**: a multi-source breadth-first search fills every pixel you painted over with the
