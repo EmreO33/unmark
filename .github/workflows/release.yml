@@ -1,0 +1,36 @@
+name: Release
+
+on:
+  push:
+    tags: [ "v*" ]
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+          cache: gradle
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Build debug APK
+        run: ./gradlew assembleDebug
+
+      - name: Publish GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: app/build/outputs/apk/debug/*.apk
+          generate_release_notes: true
+          body: |
+            Unsigned debug build. See [Building from source](README.md#building-from-source)
+            for how to build a release build yourself, or wait for a signed release once
+            this is submitted to F-Droid.
