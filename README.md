@@ -25,7 +25,7 @@
 **Unmark does NOT:**
 - Circumvent copy protection (SynthID metadata are not removed. A lot of social media websites can still detect these images if they are AI or not. This only removes the watermark itself on the photo.)
 - Upload your photos anywhere, nor collect your data
-- Require an account or internet connection, Everything that is processed is processed on only your device. You could 
+- Require an account or internet connection, Everything that is processed is processed on only your device. You could disconnect your internet and the app would still work.
 
 ## Features
 
