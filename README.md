@@ -12,7 +12,7 @@ In recent years, generative AI's have been on a high. Misinformation on the inte
 **Unmark does NOT:**
 - Circumvent copy protection. Invisible provenance metadata like SynthID is not removed — a lot of social media websites can still detect whether an image is AI-generated regardless of what Unmark does. This only removes the visible watermark from the pixels of the photo.
 - Upload your photos anywhere, nor collect your data
-- Require an account or internet connection — everything is processed entirely on your device.
+- Require an account or internet connection — everything is processed entirely on your device. You could disconnect your internet and the app would still work.
 
 ## Features
 
