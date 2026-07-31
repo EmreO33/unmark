@@ -32,7 +32,8 @@ Generative AI is the big bullet point here to shit on, on this repo. I will veri
 
 ### F-Droid
 
-Not yet submitted/published. This section will get a real badge and link once it's live there.
+Not yet submitted/published. Metadata and submission steps are prepared in
+[`fdroid/`](fdroid/SUBMITTING.md). This section will get a real badge and link once it's live there.
 
 ### Manual APK
 

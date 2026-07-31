@@ -1,0 +1,47 @@
+# F-Droid build metadata for Unmark.
+#
+# This file is NOT read by F-Droid from this repo. It's a copy to submit into F-Droid's
+# own metadata repository (fdroiddata) as metadata/com.unmark.app.yml. See fdroid/SUBMITTING.md
+# in this repo for the submission steps.
+
+Categories:
+  - Graphics
+License: GPL-3.0-or-later
+SourceCode: https://github.com/EmreO33/unmark
+IssueTracker: https://github.com/EmreO33/unmark/issues
+Changelog: https://github.com/EmreO33/unmark/releases
+
+AutoName: Unmark
+Summary: Remove watermarks and unwanted objects from photos, entirely on-device
+Description: |
+    Unmark lets you paint over a watermark, logo, or unwanted object in a photo and
+    erase it, entirely on your phone, with no internet connection required and nothing
+    uploaded anywhere.
+
+    Watermark removal uses a small, pure-Kotlin nearest-fill and smoothing algorithm.
+    There is no AI/ML model, no bundled weights, and no native code. See the project
+    README for how it works.
+
+    Features:
+
+    * On-device inpainting, no cloud processing, no network permission
+    * Manual brush selection with adjustable brush size
+    * Undo last stroke / reset mask, original photo is never overwritten
+    * Save result to your gallery or share it directly
+    * No ads, no trackers, no analytics, no account required
+
+RepoType: git
+Repo: https://github.com/EmreO33/unmark.git
+
+Builds:
+  - versionName: "0.1.0"
+    versionCode: 1
+    commit: v0.1.0
+    subdir: app
+    gradle:
+      - yes
+
+AutoUpdateMode: Version
+UpdateCheckMode: Tags ^v[0-9]+\.[0-9]+\.[0-9]+$
+CurrentVersion: "0.1.0"
+CurrentVersionCode: 1
