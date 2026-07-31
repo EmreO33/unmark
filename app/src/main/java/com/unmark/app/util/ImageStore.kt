@@ -10,7 +10,7 @@ import android.provider.MediaStore
 import java.io.OutputStream
 
 /**
- * Always writes a new image (MediaStore insert) rather than overwriting the source —
+ * Always writes a new image (MediaStore insert) rather than overwriting the source:
  * the original the user picked is never modified.
  */
 object ImageStore {

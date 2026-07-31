@@ -6,8 +6,8 @@ import kotlinx.coroutines.withContext
 import java.util.ArrayDeque
 
 /**
- * Lightweight, fully on-device inpainting. No native libraries, no bundled ML weights —
- * keeps the app small and avoids anything F-Droid would need to vet as a binary blob.
+ * Lightweight, fully on-device inpainting. No native libraries, no bundled ML weights,
+ * which keeps the app small and avoids anything F-Droid would need to vet as a binary blob.
  *
  * Approach: multi-source BFS fills each masked pixel with the color of the nearest
  * unmasked pixel (cheap, O(n)), then a few averaging passes over just the masked
