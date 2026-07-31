@@ -26,3 +26,4 @@ way: this matters for F-Droid inclusion, which requires everything in the app to
 - No proprietary or non-free dependencies (blocks F-Droid distribution).
 - Keep the app lightweight. Avoid heavy dependencies (e.g. full ML frameworks) unless the
   size/quality tradeoff is discussed in an issue first.
+- You can use AI to write the code but be sure the app is functional after you make changes.

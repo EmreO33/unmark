@@ -37,9 +37,9 @@ Not yet submitted/published. Metadata and submission steps are prepared in
 
 ### Manual APK
 
-Every push builds a debug APK automatically. Grab the latest one from the
-[Actions tab](https://github.com/EmreO33/unmark/actions) (artifact `unmark-debug-apk`), or check the
-[Releases page](https://github.com/EmreO33/unmark/releases) once tagged releases start.
+Every push builds a debug APK automatically and publishes it to the
+[Releases page](https://github.com/EmreO33/unmark/releases) under the `latest` tag. Tagged versions
+(e.g. `v0.1.0`) get their own dedicated release.
 
 ## Building from source
 
