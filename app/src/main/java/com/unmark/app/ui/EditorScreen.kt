@@ -44,6 +44,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalContext
@@ -133,9 +134,21 @@ fun EditorScreen() {
                 Canvas(
                     modifier = Modifier
                         .fillMaxSize()
+                        .clipToBounds()
                         .pointerInput(bitmap) {
+                            fun clampToCanvas(offset: Offset): Offset {
+                                val maxX = size.width.toFloat()
+                                val maxY = size.height.toFloat()
+                                return Offset(
+                                    offset.x.coerceIn(0f, maxX),
+                                    offset.y.coerceIn(0f, maxY)
+                                )
+                            }
+
                             detectDragGestures(
-                                onDragStart = { offset -> currentStrokePoints = listOf(offset) },
+                                onDragStart = { offset ->
+                                    currentStrokePoints = listOf(clampToCanvas(offset))
+                                },
                                 onDragEnd = {
                                     if (currentStrokePoints.size > 1) {
                                         strokes.add(Stroke(currentStrokePoints, brushRadius))
@@ -144,7 +157,7 @@ fun EditorScreen() {
                                 },
                                 onDragCancel = { currentStrokePoints = emptyList() },
                                 onDrag = { change, _ ->
-                                    currentStrokePoints = currentStrokePoints + change.position
+                                    currentStrokePoints = currentStrokePoints + clampToCanvas(change.position)
                                 }
                             )
                         }
