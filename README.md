@@ -10,7 +10,7 @@ Unmark: we erase stuff that big corpos won't.
 In recent years, generative AI's have been on a high. Misinformation on the internet have skyrocketed also. To combat this, companies like Google, OpenAI, xAI and more have put watermarks on the images they generate. Some people (like me) do not like this. This tool lets you paint over a watermark and erase it, right on your phone. You select the mark yourself, there's no AI or model involved, just a small on-device algorithm (see [How it works](#how-it-works)).
 
 **Unmark does NOT:**
-- Circumvent copy protection. Invisible provenance metadata like SynthID is not removed: a lot of social media websites can still detect whether an image is AI-generated regardless of what Unmark does. This only removes the visible watermark from the pixels of the photo.
+- Circumvent copy protection. Invisible pixel watermarks like SynthID are not removed: a lot of social media websites can still detect whether an image is AI-generated regardless of what Unmark does. Unmark removes the visible watermark from the photo's pixels and strips embedded metadata tags (EXIF, XMP, possible C2PA), it does not touch invisible pixel-level watermarking.
 - Upload your photos anywhere, nor collect your data
 - Require an account or internet connection, everything is processed entirely on your device. You could disconnect your internet and the app would still work.
 
@@ -21,8 +21,11 @@ In recent years, generative AI's have been on a high. Misinformation on the inte
 - [x] Nearest-fill + smoothing inpainting (no AI/ML model, no native code)
 - [x] Undo last stroke / reset mask, non-destructive editing (original photo is never overwritten)
 - [x] Save to gallery or share result directly
+- [x] Automatic metadata stripping (EXIF, XMP, possible C2PA content credentials) on save, with an
+      on-pick scan showing you what was found before it's gone
 - [x] No ads, no trackers, no analytics
 - [ ] Batch processing (not yet implemented)
+- [ ] Auto-detection of known vendor watermarks (not yet implemented, still manual brush only)
 
 ## Stance on AI
 
@@ -76,6 +79,15 @@ It won't match a proper diffusion/inpainting model on large or complex regions, 
 zero dependencies, and works well for small marks like corner watermarks and logos on reasonably
 textured backgrounds.
 
+Metadata stripping works differently, and needs no algorithm at all: Unmark never copies the
+original file's bytes. It decodes the picked photo to raw pixels and, on save, re-encodes a brand
+new PNG from those pixels (see [`ImageUtils.kt`](app/src/main/java/com/unmark/app/util/ImageUtils.kt)
+and [`ImageStore.kt`](app/src/main/java/com/unmark/app/util/ImageStore.kt)). EXIF, XMP, IPTC, and
+C2PA data live in the original container, not in pixel data, so none of it survives that round trip.
+[`MetadataInspector.kt`](app/src/main/java/com/unmark/app/util/MetadataInspector.kt) scans the
+original file when you pick it purely to show you what would have been there, it doesn't drive a
+separate removal step because there's nothing left to remove by the time you save.
+
 ## Permissions
 
 Unmark requests **no permissions at all**. Picking a photo goes through the system Photo Picker
@@ -113,3 +125,7 @@ original vector drawable in this repo.
 ## Acknowledgments
 
 - Built with [Jetpack Compose](https://developer.android.com/jetpack/compose) and AndroidX libraries
+- Metadata stripping was inspired by
+  [remove-ai-watermarks](https://github.com/wiltodelta/remove-ai-watermarks), a much more capable
+  desktop/CLI tool that also handles invisible watermark regeneration and video, both out of scope
+  for a phone app (the invisible-watermark removal there needs a CUDA GPU)

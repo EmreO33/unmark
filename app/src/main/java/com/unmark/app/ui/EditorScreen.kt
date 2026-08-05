@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
+import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
@@ -55,6 +56,9 @@ import com.unmark.app.R
 import com.unmark.app.inpaint.Inpainter
 import com.unmark.app.util.ImageStore
 import com.unmark.app.util.ImageUtils
+import com.unmark.app.util.MetadataFindings
+import com.unmark.app.util.MetadataInspector
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 private data class Stroke(val points: List<Offset>, val radiusPx: Float)
@@ -73,6 +77,7 @@ fun EditorScreen() {
     var brushRadius by remember { mutableFloatStateOf(36f) }
     var isProcessing by remember { mutableStateOf(false) }
     var lastSavedUriString by remember { mutableStateOf<String?>(null) }
+    var metadataFindings by remember { mutableStateOf<MetadataFindings?>(null) }
 
     val pickImageLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.PickVisualMedia()
@@ -83,6 +88,11 @@ fun EditorScreen() {
             strokes.clear()
             currentStrokePoints = emptyList()
             lastSavedUriString = null
+            metadataFindings = null
+            scope.launch(Dispatchers.IO) {
+                val findings = MetadataInspector.inspect(context, uri)
+                metadataFindings = findings
+            }
         }
     }
 
@@ -117,6 +127,10 @@ fun EditorScreen() {
                 style = MaterialTheme.typography.bodyLarge,
                 modifier = Modifier.padding(bottom = 12.dp)
             )
+
+            metadataFindings?.let { findings ->
+                MetadataCard(findings, modifier = Modifier.padding(bottom = 12.dp))
+            }
 
             Box(
                 modifier = Modifier
@@ -286,6 +300,33 @@ fun EditorScreen() {
                 ) {
                     Text(stringResource(R.string.share))
                 }
+            }
+        }
+    }
+}
+
+@Composable
+private fun MetadataCard(findings: MetadataFindings, modifier: Modifier = Modifier) {
+    Card(modifier = modifier.fillMaxWidth()) {
+        Column(modifier = Modifier.padding(12.dp)) {
+            if (findings.isClean) {
+                Text(stringResource(R.string.metadata_clean), style = MaterialTheme.typography.labelLarge)
+            } else {
+                Text(stringResource(R.string.metadata_found_prefix), style = MaterialTheme.typography.labelLarge)
+                if (findings.exifTags.isNotEmpty()) {
+                    Text("• " + stringResource(R.string.metadata_exif_tags, findings.exifTags.size))
+                }
+                if (findings.hasXmp) {
+                    Text("• " + stringResource(R.string.metadata_xmp))
+                }
+                if (findings.hasC2pa) {
+                    Text("• " + stringResource(R.string.metadata_c2pa))
+                }
+                Text(
+                    text = stringResource(R.string.metadata_will_be_stripped),
+                    style = MaterialTheme.typography.labelLarge,
+                    modifier = Modifier.padding(top = 6.dp)
+                )
             }
         }
     }

@@ -13,4 +13,11 @@
     <string name="brush_size">Brush size</string>
     <string name="start_over">Start over</string>
     <string name="no_image_selected">No photo selected yet</string>
+
+    <string name="metadata_clean">No embedded metadata found in this photo.</string>
+    <string name="metadata_found_prefix">Found in this photo:</string>
+    <string name="metadata_exif_tags">%1$d EXIF tag(s) (camera/software/location info)</string>
+    <string name="metadata_xmp">XMP metadata</string>
+    <string name="metadata_c2pa">possible C2PA content credentials</string>
+    <string name="metadata_will_be_stripped">All of this is dropped automatically when you save. Unmark never copies the original file, it re-encodes a fresh image from pixels only.</string>
 </resources>
