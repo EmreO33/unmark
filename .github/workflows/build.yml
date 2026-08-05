@@ -24,14 +24,34 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
-      - name: Build debug APK
-        run: ./gradlew assembleDebug
+      - name: Prepare release signing
+        env:
+          KEYSTORE_B64: ${{ secrets.UNMARK_RELEASE_KEYSTORE_BASE64 }}
+          STORE_PASS: ${{ secrets.UNMARK_RELEASE_KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.UNMARK_RELEASE_KEY_ALIAS }}
+          KEY_PASS: ${{ secrets.UNMARK_RELEASE_KEY_PASSWORD }}
+        run: |
+          if [ -n "$KEYSTORE_B64" ]; then
+            echo "$KEYSTORE_B64" | base64 -d > "$RUNNER_TEMP/unmark-release.jks"
+            {
+              echo "UNMARK_RELEASE_KEYSTORE_PATH=$RUNNER_TEMP/unmark-release.jks"
+              echo "UNMARK_RELEASE_KEYSTORE_PASSWORD=$STORE_PASS"
+              echo "UNMARK_RELEASE_KEY_ALIAS=$KEY_ALIAS"
+              echo "UNMARK_RELEASE_KEY_PASSWORD=$KEY_PASS"
+            } >> "$GITHUB_ENV"
+          fi
+
+      - name: Build release APK
+        run: ./gradlew assembleRelease
+
+      - name: Rename APK
+        run: cp app/build/outputs/apk/release/*.apk app/build/outputs/apk/release/Unmark.apk
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: unmark-debug-apk
-          path: app/build/outputs/apk/debug/*.apk
+          name: unmark-apk
+          path: app/build/outputs/apk/release/Unmark.apk
 
       - name: Publish latest build to Releases
         if: github.event_name == 'push'
@@ -39,5 +59,5 @@ jobs:
         with:
           tag_name: latest
           name: Latest build
-          prerelease: true
-          files: app/build/outputs/apk/debug/*.apk
+          prerelease: false
+          files: app/build/outputs/apk/release/Unmark.apk

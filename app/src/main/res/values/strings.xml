@@ -20,4 +20,11 @@
     <string name="metadata_xmp">XMP metadata</string>
     <string name="metadata_c2pa">possible C2PA content credentials</string>
     <string name="metadata_will_be_stripped">All of this is dropped automatically when you save. Unmark never copies the original file, it re-encodes a fresh image from pixels only.</string>
+
+    <string name="menu_about">About</string>
+    <string name="menu_source">Source code</string>
+    <string name="menu_privacy">Privacy policy</string>
+    <string name="menu_license">License</string>
+    <string name="about_body">Unmark removes watermarks and unwanted objects from photos, entirely on-device. No ads, no trackers, no account, no network permission. Licensed GPL-3.0-or-later.</string>
+    <string name="about_close">Close</string>
 </resources>

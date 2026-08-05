@@ -40,9 +40,10 @@ Not yet submitted/published. Metadata and submission steps are prepared in
 
 ### Manual APK
 
-Every push builds a debug APK automatically and publishes it to the
+Every push builds a signed release APK named `Unmark.apk` automatically and publishes it to the
 [Releases page](https://github.com/EmreO33/unmark/releases) under the `latest` tag. Tagged versions
-(e.g. `v0.1.0`) get their own dedicated release.
+(e.g. `v0.1.0`) get their own dedicated release. CI signs with a project-only key kept as GitHub
+Actions secrets, never committed to this repo.
 
 ## Building from source
 
@@ -57,13 +58,15 @@ cd unmark
 ./gradlew assembleDebug
 ```
 
-Output APK: `app/build/outputs/apk/debug/`
+Output APK: `app/build/outputs/apk/debug/`. Building `assembleRelease` yourself produces an unsigned
+APK unless you provide your own keystore via the `UNMARK_RELEASE_KEYSTORE_*` environment variables
+(see [`app/build.gradle.kts`](app/build.gradle.kts)), since the project's own release key isn't public.
 
 ### Verifying builds
 
-No reproducible-build/signing setup yet. The only builds published right now are the unsigned debug
-APKs produced by the [GitHub Actions workflow](.github/workflows/build.yml) on every push, so you can
-compare the build log against the source at the same commit.
+No reproducible-build setup yet, so the release APK signature isn't independently verifiable against
+the source. The [GitHub Actions workflow](.github/workflows/build.yml) that builds and signs it is
+public, so you can compare its build log against the source at the same commit.
 
 ## How it works
 

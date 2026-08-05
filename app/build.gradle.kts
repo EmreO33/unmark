@@ -3,6 +3,14 @@ plugins {
     id("org.jetbrains.kotlin.android")
 }
 
+// Release signing comes from env vars so the keystore itself never touches git.
+// CI decodes the UNMARK_RELEASE_KEYSTORE_BASE64 secret to a file and sets these;
+// locally, assembleRelease just produces an unsigned APK when they're unset.
+val releaseKeystorePath: String? = System.getenv("UNMARK_RELEASE_KEYSTORE_PATH")
+val releaseKeystorePassword: String? = System.getenv("UNMARK_RELEASE_KEYSTORE_PASSWORD")
+val releaseKeyAlias: String? = System.getenv("UNMARK_RELEASE_KEY_ALIAS")
+val releaseKeyPassword: String? = System.getenv("UNMARK_RELEASE_KEY_PASSWORD")
+
 android {
     namespace = "com.unmark.app"
     compileSdk = 34
@@ -19,6 +27,17 @@ android {
         }
     }
 
+    signingConfigs {
+        if (releaseKeystorePath != null) {
+            create("release") {
+                storeFile = file(releaseKeystorePath)
+                storePassword = releaseKeystorePassword
+                keyAlias = releaseKeyAlias
+                keyPassword = releaseKeyPassword
+            }
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = true
@@ -27,6 +46,9 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            if (releaseKeystorePath != null) {
+                signingConfig = signingConfigs.getByName("release")
+            }
         }
     }
 
@@ -60,6 +82,7 @@ dependencies {
     implementation("androidx.activity:activity-compose:1.9.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1")
     implementation("androidx.exifinterface:exifinterface:1.3.7")
+    implementation("androidx.core:core-splashscreen:1.0.1")
 
     implementation(platform("androidx.compose:compose-bom:2024.06.00"))
     implementation("androidx.compose.ui:ui")
