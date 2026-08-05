@@ -17,8 +17,13 @@ publish with no manual work on either side.
 5. F-Droid's reviewers will comment if anything needs fixing (common asks: reproducible builds,
    exact license match, no anti-features). Respond on the MR; this can take anywhere from days
    to weeks depending on reviewer availability.
-6. Once merged, F-Droid's build server does a test build from the `v0.1.0` tag. If it succeeds,
-   Unmark goes live on F-Droid within the next publish cycle (typically up to a few days).
+6. Once merged, F-Droid's build server does a test build from the tag/commit pinned in the
+   metadata file's `Builds` entry. If it succeeds, Unmark goes live on F-Droid within the next
+   publish cycle (typically up to a few days).
+
+**Before submitting, make sure the metadata's `Builds` entry points at the current release tag**,
+not an old one, this repo's copy at [`com.unmark.app.yml`](com.unmark.app.yml) is kept up to date,
+but if you copied it earlier, re-copy it now.
 
 ## What's automated after that
 
