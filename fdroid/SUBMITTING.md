@@ -25,6 +25,11 @@ publish with no manual work on either side.
 not an old one, this repo's copy at [`com.unmark.app.yml`](com.unmark.app.yml) is kept up to date,
 but if you copied it earlier, re-copy it now.
 
+**Watch out for line endings when copy-pasting into GitLab's web editor on Windows.** If the pasted
+file ends up with CRLF line endings, `fdroid rewritemeta` will reject it and F-Droid's build script
+can fail to locate the `versionCode` line. After committing, open the file's raw view on GitLab and
+confirm it looks like a normal LF file (no stray `^M` visible if you check with `git diff` locally).
+
 ## What's automated after that
 
 The metadata sets `AutoUpdateMode: Version` and `UpdateCheckMode: Tags ^v[0-9]+\.[0-9]+\.[0-9]+$`.
