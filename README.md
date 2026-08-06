@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="icon.png" alt="Unmark icon" width="128" />
+  <img src="icon.png" alt="Unmark icon" width="256" />
 </p>
 
 # Unmark
