@@ -1,7 +1,3 @@
-<p align="center">
-  <img src="icon.png" alt="Unmark icon" width="256" />
-</p>
-
 # Unmark
 
 Unmark: we erase stuff that big corpos won't.
