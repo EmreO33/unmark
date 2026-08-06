@@ -9,11 +9,17 @@ publish with no manual work on either side.
 
 1. Create a GitLab account if you don't have one, then fork
    [gitlab.com/fdroid/fdroiddata](https://gitlab.com/fdroid/fdroiddata).
-2. In your fork, add [`com.unmark.app.yml`](com.unmark.app.yml) from this folder as
-   `metadata/com.unmark.app.yml`.
+2. In your fork, add **two** files:
+   - [`com.unmark.app.yml`](com.unmark.app.yml) from this folder, as `metadata/com.unmark.app.yml`
+   - [`com.unmark.app/en-US/summary.txt`](com.unmark.app/en-US/summary.txt) from this folder, as
+     `metadata/com.unmark.app/en-US/summary.txt`
+
+   The `Summary` field is not part of the main yml, F-Droid keeps per-locale short descriptions
+   in separate files. Skipping this file makes CI's `tools check scripts` job fail (it tries to
+   auto-migrate an inline `Summary:` field and treats that as an error).
 3. Optional but recommended: install `fdroidserver` and run `fdroid lint com.unmark.app` and
    `fdroid checkupdates com.unmark.app` locally to catch metadata problems before submitting.
-4. Open a merge request against `fdroiddata` with that one file.
+4. Open a merge request against `fdroiddata` with those files.
 5. F-Droid's reviewers will comment if anything needs fixing (common asks: reproducible builds,
    exact license match, no anti-features). Respond on the MR; this can take anywhere from days
    to weeks depending on reviewer availability.

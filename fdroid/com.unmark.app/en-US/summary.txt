@@ -1,0 +1,1 @@
+Remove watermarks and unwanted objects from photos, entirely on-device

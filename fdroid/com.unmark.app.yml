@@ -6,7 +6,6 @@ IssueTracker: https://github.com/EmreO33/unmark/issues
 Changelog: https://github.com/EmreO33/unmark/releases
 
 AutoName: Unmark
-Summary: Remove watermarks and unwanted objects from photos, entirely on-device
 Description: |
   Unmark lets you paint over a watermark, logo, or unwanted object in a photo and
   erase it, entirely on your phone, with no internet connection required and nothing
