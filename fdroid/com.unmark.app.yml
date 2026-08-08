@@ -11,14 +11,14 @@ RepoType: git
 Repo: https://github.com/EmreO33/unmark.git
 
 Builds:
-  - versionName: 0.2.0
-    versionCode: 2
-    commit: d4764005e48bbe4a9397bd12767969b14f22aba0
+  - versionName: 0.2.1
+    versionCode: 3
+    commit: PLACEHOLDER_COMMIT_HASH
     subdir: app
     gradle:
       - yes
 
 AutoUpdateMode: Version
 UpdateCheckMode: Tags ^v[0-9]+\.[0-9]+\.[0-9]+$
-CurrentVersion: 0.2.0
-CurrentVersionCode: 2
+CurrentVersion: 0.2.1
+CurrentVersionCode: 3
