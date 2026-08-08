@@ -6,24 +6,6 @@ IssueTracker: https://github.com/EmreO33/unmark/issues
 Changelog: https://github.com/EmreO33/unmark/releases
 
 AutoName: Unmark
-Description: |
-  Unmark lets you paint over a watermark, logo, or unwanted object in a photo and
-  erase it, entirely on your phone, with no internet connection required and nothing
-  uploaded anywhere.
-
-  Watermark removal uses a small, pure-Kotlin nearest-fill and smoothing algorithm.
-  There is no AI/ML model, no bundled weights, and no native code. See the project
-  README for how it works.
-
-  Features:
-
-  * On-device inpainting, no cloud processing, no network permission
-  * Manual brush selection with adjustable brush size
-  * Undo last stroke / reset mask, original photo is never overwritten
-  * Automatic metadata stripping (EXIF, XMP, possible C2PA) on save, with a scan showing
-    you what was found in the photo before it's gone
-  * Save result to your gallery or share it directly
-  * No ads, no trackers, no analytics, no account required
 
 RepoType: git
 Repo: https://github.com/EmreO33/unmark.git
@@ -31,7 +13,7 @@ Repo: https://github.com/EmreO33/unmark.git
 Builds:
   - versionName: 0.2.0
     versionCode: 2
-    commit: v0.2.0
+    commit: d4764005e48bbe4a9397bd12767969b14f22aba0
     subdir: app
     gradle:
       - yes

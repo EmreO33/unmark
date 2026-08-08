@@ -8,33 +8,46 @@ publish with no manual work on either side.
 ## One-time setup (you do this, it can't be automated)
 
 1. Create a GitLab account if you don't have one, then fork
-   [gitlab.com/fdroid/fdroiddata](https://gitlab.com/fdroid/fdroiddata).
-2. In your fork, add **two** files:
-   - [`com.unmark.app.yml`](com.unmark.app.yml) from this folder, as `metadata/com.unmark.app.yml`
-   - [`com.unmark.app/en-US/summary.txt`](com.unmark.app/en-US/summary.txt) from this folder, as
-     `metadata/com.unmark.app/en-US/summary.txt`
+   [gitlab.com/fdroid/fdroiddata](https://gitlab.com/fdroid/fdroiddata). It needs to be a
+   **public** fork, GitLab may restrict new accounts from setting a project to Public; if so,
+   grant the reviewing maintainer direct Member access as a workaround, or contact GitLab
+   support.
+2. In your fork, add exactly **one** file: [`com.unmark.app.yml`](com.unmark.app.yml) from this
+   folder, as `metadata/com.unmark.app.yml`.
 
-   The `Summary` field is not part of the main yml, F-Droid keeps per-locale short descriptions
-   in separate files. Skipping this file makes CI's `tools check scripts` job fail (it tries to
-   auto-migrate an inline `Summary:` field and treats that as an error).
+   Do not add `Summary`, `Description`, or any per-locale files under `metadata/com.unmark.app/`
+   in fdroiddata. That listing text lives in *this* repo instead, in the standard fastlane
+   layout at [`../fastlane/metadata/android/en-US/`](../fastlane/metadata/android/en-US/)
+   (`short_description.txt`, `full_description.txt`). F-Droid pulls it from there automatically
+   at build time. Adding it in fdroiddata too gets flagged by CI and by reviewers.
 3. Optional but recommended: install `fdroidserver` and run `fdroid lint com.unmark.app` and
    `fdroid checkupdates com.unmark.app` locally to catch metadata problems before submitting.
-4. Open a merge request against `fdroiddata` with those files.
+4. Open a merge request against `fdroiddata`. Edit the MR description and pick the **"App
+   Inclusion"** template from GitLab's template dropdown; read through it and check off the
+   task boxes that apply.
 5. F-Droid's reviewers will comment if anything needs fixing (common asks: reproducible builds,
-   exact license match, no anti-features). Respond on the MR; this can take anywhere from days
-   to weeks depending on reviewer availability.
-6. Once merged, F-Droid's build server does a test build from the tag/commit pinned in the
-   metadata file's `Builds` entry. If it succeeds, Unmark goes live on F-Droid within the next
-   publish cycle (typically up to a few days).
+   exact license match, no anti-features, commit hashes instead of tags, listing text living in
+   the app's own repo instead of fdroiddata). Respond on the MR; this can take anywhere from
+   days to weeks depending on reviewer availability.
+6. Once merged, F-Droid's build server does a test build from the commit pinned in the metadata
+   file's `Builds` entry. If it succeeds, Unmark goes live on F-Droid within the next publish
+   cycle (typically up to a few days).
 
-**Before submitting, make sure the metadata's `Builds` entry points at the current release tag**,
-not an old one, this repo's copy at [`com.unmark.app.yml`](com.unmark.app.yml) is kept up to date,
-but if you copied it earlier, re-copy it now.
+**The `commit:` field in `Builds:` must be a full commit hash, never a tag or branch name.**
+Get it with:
 
-**Watch out for line endings when copy-pasting into GitLab's web editor on Windows.** If the pasted
-file ends up with CRLF line endings, `fdroid rewritemeta` will reject it and F-Droid's build script
-can fail to locate the `versionCode` line. After committing, open the file's raw view on GitLab and
-confirm it looks like a normal LF file (no stray `^M` visible if you check with `git diff` locally).
+```bash
+git rev-list -n 1 vX.Y.Z
+```
+
+and use that 40-character hash, not `vX.Y.Z` itself. (F-Droid's own bot resolves this
+automatically for versions it adds later via `AutoUpdateMode`; this only matters for entries
+you hand-write, like the first one.)
+
+**Watch out for line endings when copy-pasting into GitLab's web editor on Windows.** If the
+pasted file ends up with CRLF line endings, `fdroid rewritemeta` will reject it. Prefer
+downloading the raw file from GitHub and using GitLab's "Replace file" (upload) action instead
+of pasting text.
 
 ## What's automated after that
 
@@ -49,11 +62,14 @@ before tagging a new release:
 
 1. Bump `versionCode` (always increases by at least 1) and `versionName` in
    [`app/build.gradle.kts`](../app/build.gradle.kts).
-2. Commit that change, then tag and push, e.g.:
+2. Update the listing text in [`../fastlane/metadata/android/en-US/`](../fastlane/metadata/android/en-US/)
+   if anything changed, and optionally add a changelog note at
+   `../fastlane/metadata/android/en-US/changelogs/<versionCode>.txt`.
+3. Commit those changes, then tag and push, e.g.:
    ```bash
-   git tag v0.2.0
-   git push origin v0.2.0
+   git tag v0.3.0
+   git push origin v0.3.0
    ```
-3. This repo's [release workflow](../.github/workflows/release.yml) publishes the GitHub Release
+4. This repo's [release workflow](../.github/workflows/release.yml) publishes the GitHub Release
    automatically. F-Droid's bot picks up the same tag on its own schedule and builds/publishes
-   there too, independently.
+   there too, independently, no changes needed in fdroiddata.
