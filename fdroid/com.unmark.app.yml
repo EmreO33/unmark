@@ -9,6 +9,7 @@ AutoName: Unmark
 
 RepoType: git
 Repo: https://github.com/EmreO33/unmark.git
+Binaries: https://github.com/EmreO33/unmark/releases/download/v%v/Unmark.apk
 
 Builds:
   - versionName: 0.2.1
@@ -17,6 +18,8 @@ Builds:
     subdir: app
     gradle:
       - yes
+
+AllowedAPKSigningKeys: 7e5502a0362b1bbb4d2847e2bc301624ef0cd74073836c73a498aa20365761ad
 
 AutoUpdateMode: Version
 UpdateCheckMode: Tags ^v[0-9]+\.[0-9]+\.[0-9]+$

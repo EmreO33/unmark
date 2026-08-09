@@ -49,6 +49,31 @@ pasted file ends up with CRLF line endings, `fdroid rewritemeta` will reject it.
 downloading the raw file from GitHub and using GitLab's "Replace file" (upload) action instead
 of pasting text.
 
+## Reproducible builds
+
+`Binaries` and `AllowedAPKSigningKeys` in the metadata let F-Droid verify its own build matches
+our signed GitHub Release APK byte-for-byte, and if so, distribute our signed APK directly
+instead of resigning with F-Droid's own key. Both are one-time, permanent settings, nothing to
+redo per release:
+
+- `Binaries` is a URL template (`%v`/`%c` expand to versionName/versionCode) pointing at our
+  GitHub Release asset, which is always named `Unmark.apk` regardless of version.
+- `AllowedAPKSigningKeys` is the lowercase hex SHA-256 fingerprint of our release signing
+  certificate (the same keystore documented in `unmark-release-keystore-README.txt`, kept out
+  of git). Get it with:
+  ```bash
+  keytool -list -v -keystore unmark-release.jks -storepass <password> | grep SHA256
+  ```
+  then strip the colons and lowercase it.
+
+If verification ever fails (different build environments producing non-identical output isn't
+unheard of), F-Droid just falls back to signing the APK with its own key, no harm done, this
+isn't something that can break the submission.
+
+**If the signing key is ever lost or rotated, `AllowedAPKSigningKeys` must be updated to match**,
+otherwise F-Droid will stop trusting upstream binaries entirely (still not fatal, just reverts to
+F-Droid resigning it).
+
 ## What's automated after that
 
 The metadata sets `AutoUpdateMode: Version` and `UpdateCheckMode: Tags ^v[0-9]+\.[0-9]+\.[0-9]+$`.
