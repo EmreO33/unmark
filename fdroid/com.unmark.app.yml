@@ -18,9 +18,9 @@ Builds:
     subdir: app
     gradle:
       - yes
-  - versionName: 0.3.1
-    versionCode: 6
-    commit: 95fd45eca972f791b9b7c7d1ab4543808f913495
+  - versionName: 0.4.0
+    versionCode: 7
+    commit: 85cb3260055dfd2710ab8a6cbe644a60a0a64ac8
     subdir: app
     gradle:
       - yes
@@ -29,5 +29,5 @@ AllowedAPKSigningKeys: 7e5502a0362b1bbb4d2847e2bc301624ef0cd74073836c73a498aa203
 
 AutoUpdateMode: Version
 UpdateCheckMode: Tags ^v[0-9]+\.[0-9]+\.[0-9]+$
-CurrentVersion: 0.3.1
-CurrentVersionCode: 6
+CurrentVersion: 0.4.0
+CurrentVersionCode: 7
