@@ -12,9 +12,9 @@ Repo: https://github.com/EmreO33/unmark.git
 Binaries: https://github.com/EmreO33/unmark/releases/download/v%v/Unmark.apk
 
 Builds:
-  - versionName: 0.2.1
-    versionCode: 3
-    commit: e32966912f836822d4a268f3c4c3dbf8abff9a51
+  - versionName: 0.2.2
+    versionCode: 4
+    commit: PLACEHOLDER_COMMIT_HASH
     subdir: app
     gradle:
       - yes
@@ -23,5 +23,5 @@ AllowedAPKSigningKeys: 7e5502a0362b1bbb4d2847e2bc301624ef0cd74073836c73a498aa203
 
 AutoUpdateMode: Version
 UpdateCheckMode: Tags ^v[0-9]+\.[0-9]+\.[0-9]+$
-CurrentVersion: 0.2.1
-CurrentVersionCode: 3
+CurrentVersion: 0.2.2
+CurrentVersionCode: 4

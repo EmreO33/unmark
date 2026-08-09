@@ -19,12 +19,20 @@ android {
         applicationId = "com.unmark.app"
         minSdk = 29
         targetSdk = 34
-        versionCode = 3
-        versionName = "0.2.1"
+        versionCode = 4
+        versionName = "0.2.2"
 
         vectorDrawables {
             useSupportLibrary = true
         }
+    }
+
+    // AGP embeds a "Dependency metadata" block in signed APKs by default (a Play Store
+    // dependency-transparency feature). F-Droid's reproducible-build check rejects any
+    // signing block it didn't produce itself, so this needs to stay off.
+    dependenciesInfo {
+        includeInApk = false
+        includeInBundle = false
     }
 
     signingConfigs {
