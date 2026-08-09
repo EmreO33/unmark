@@ -28,8 +28,8 @@ In recent years, generative AI's have been on a high. Misinformation on the inte
 - [x] Automatic metadata stripping (EXIF, XMP, possible C2PA content credentials) on save, with an
       on-pick scan showing you what was found before it's gone
 - [x] No ads, no trackers, no analytics
-- [ ] Batch processing (not yet implemented)
-- [ ] Auto-detection of known vendor watermarks (not yet implemented, still manual brush only)
+- [x] Batch processing: apply one watermark region to many photos at once
+- [x] Auto-detection of known vendor watermarks (heuristic, EXIF/metadata based), with manual brush still available for anything else
 
 ## Stance on AI
 
@@ -139,11 +139,19 @@ If it's running Android 10 (API 29) or newer, yes. Older devices aren't supporte
 [Permissions](#permissions) for why that specific cutoff was chosen).
 
 **Can it process a whole folder of photos at once?**
-Not yet, batch processing is on the list but not built (see [Features](#features)).
+Yes, use the hamburger menu's Batch process option: pick several photos, pick a watermark area
+(auto-detect per photo, or a fixed vendor), and it erases and saves all of them in one pass.
+Best when every photo in the batch shares the same watermark placement, like a set of exports
+from the same generator.
 
 **Can it find watermarks automatically?**
-No, brush selection is manual only right now. Auto-detecting known vendor watermarks is a
-possible future feature, but isn't built yet.
+Partially: Unmark recognizes a handful of known generator watermark positions (Bing Image
+Creator, Meta AI, Google ImageFX/Gemini, Adobe Firefly, Playground AI, Leonardo.Ai, Craiyon) by
+scanning EXIF and embedded metadata for that vendor's signature, then suggests the region it
+usually appears in. This is a heuristic, not a guarantee, positions are approximate and the
+metadata it relies on is often stripped by the time a photo reaches you (see
+[Privacy](#privacy)). Manual brush selection is still there and still the reliable fallback for
+anything it doesn't recognize.
 
 **Why does the erased area look a bit smudgy on busy backgrounds?**
 Unmark uses a lightweight nearest-fill and smoothing algorithm, not an AI model, see

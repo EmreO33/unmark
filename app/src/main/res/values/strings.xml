@@ -22,9 +22,34 @@
     <string name="metadata_will_be_stripped">All of this is dropped automatically when you save. Unmark never copies the original file, it re-encodes a fresh image from pixels only.</string>
 
     <string name="menu_about">About</string>
+    <string name="menu_batch">Batch process</string>
     <string name="menu_source">Source code</string>
     <string name="menu_privacy">Privacy policy</string>
     <string name="menu_license">License</string>
     <string name="about_body">Unmark removes watermarks and unwanted objects from photos, entirely on-device. No ads, no trackers, no account, no network permission. Licensed GPL-3.0-or-later.</string>
     <string name="about_close">Close</string>
+
+    <string name="vendor_detected">Looks like a %1$s watermark</string>
+    <string name="vendor_not_detected">No known vendor watermark detected in this photo</string>
+    <string name="vendor_highlight_area">Highlight area</string>
+    <string name="vendor_not_this">Not this?</string>
+    <string name="vendor_choose_manually">Choose vendor manually</string>
+    <string name="vendor_area_selected">%1$s area selected</string>
+    <string name="vendor_area_hint">Approximate placement, adjust with the brush if needed before erasing</string>
+    <string name="vendor_clear_area">Clear selection</string>
+
+    <string name="batch_title">Batch process</string>
+    <string name="batch_back">Back</string>
+    <string name="batch_hint">Erase the same known watermark from many photos at once. Best for a batch that all came from the same generator.</string>
+    <string name="batch_pick_photos">Choose photos</string>
+    <string name="batch_photos_selected">%1$d photo(s) selected</string>
+    <string name="batch_area_label">Watermark area</string>
+    <string name="batch_area_auto">Auto-detect per photo</string>
+    <string name="batch_area_use_auto">Use auto-detect</string>
+    <string name="batch_area_pick_vendor">Pick vendor</string>
+    <string name="batch_process">Process %1$d photo(s)</string>
+    <string name="batch_processing">Processing %1$d/%2$d…</string>
+    <string name="batch_summary_erased">%1$d photo(s) erased and saved to Pictures/Unmark</string>
+    <string name="batch_summary_skipped">%1$d skipped, no known watermark detected</string>
+    <string name="batch_summary_failed">%1$d failed to load</string>
 </resources>

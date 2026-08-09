@@ -71,6 +71,8 @@ import com.unmark.app.util.ImageStore
 import com.unmark.app.util.ImageUtils
 import com.unmark.app.util.MetadataFindings
 import com.unmark.app.util.MetadataInspector
+import com.unmark.app.util.VendorWatermark
+import com.unmark.app.util.VendorWatermarks
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -78,7 +80,7 @@ private data class Stroke(val points: List<Offset>, val radiusPx: Float)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun EditorScreen() {
+fun EditorScreen(onOpenBatch: () -> Unit = {}) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
     val snackbarHostState = remember { SnackbarHostState() }
@@ -93,6 +95,9 @@ fun EditorScreen() {
     var metadataFindings by remember { mutableStateOf<MetadataFindings?>(null) }
     var menuExpanded by remember { mutableStateOf(false) }
     var showAboutDialog by remember { mutableStateOf(false) }
+    var detectedVendor by remember { mutableStateOf<VendorWatermark?>(null) }
+    var selectedVendorRegion by remember { mutableStateOf<VendorWatermark?>(null) }
+    var vendorPickerExpanded by remember { mutableStateOf(false) }
 
     val pickImageLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.PickVisualMedia()
@@ -104,9 +109,13 @@ fun EditorScreen() {
             currentStrokePoints = emptyList()
             lastSavedUriString = null
             metadataFindings = null
+            detectedVendor = null
+            selectedVendorRegion = null
             scope.launch(Dispatchers.IO) {
                 val findings = MetadataInspector.inspect(context, uri)
                 metadataFindings = findings
+                val vendor = VendorWatermarks.detect(context, uri)
+                detectedVendor = vendor
             }
         }
     }
@@ -130,6 +139,10 @@ fun EditorScreen() {
                                 DropdownMenuItem(
                                     text = { Text(stringResource(R.string.menu_about)) },
                                     onClick = { menuExpanded = false; showAboutDialog = true }
+                                )
+                                DropdownMenuItem(
+                                    text = { Text(stringResource(R.string.menu_batch)) },
+                                    onClick = { menuExpanded = false; onOpenBatch() }
                                 )
                                 DropdownMenuItem(
                                     text = { Text(stringResource(R.string.menu_source)) },
@@ -203,6 +216,16 @@ fun EditorScreen() {
                 MetadataCard(findings, modifier = Modifier.padding(bottom = 12.dp))
             }
 
+            VendorWatermarkCard(
+                detected = detectedVendor,
+                selected = selectedVendorRegion,
+                pickerExpanded = vendorPickerExpanded,
+                onSetPickerExpanded = { vendorPickerExpanded = it },
+                onSelect = { selectedVendorRegion = it; vendorPickerExpanded = false },
+                onClear = { selectedVendorRegion = null },
+                modifier = Modifier.padding(bottom = 12.dp)
+            )
+
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -261,6 +284,18 @@ fun EditorScreen() {
                             )
                         }
                     }
+
+                    selectedVendorRegion?.let { vendor ->
+                        val region = vendor.region
+                        drawRect(
+                            color = Color(0xFF7C5CFC).copy(alpha = 0.35f),
+                            topLeft = Offset(region.left * size.width, region.top * size.height),
+                            size = androidx.compose.ui.geometry.Size(
+                                (region.right - region.left) * size.width,
+                                (region.bottom - region.top) * size.height
+                            )
+                        )
+                    }
                 }
 
                 if (isProcessing) {
@@ -308,17 +343,28 @@ fun EditorScreen() {
                 Button(
                     onClick = {
                         val size = canvasSizePx
-                        if (size.width == 0 || size.height == 0 || strokes.isEmpty()) return@Button
+                        val hasSelection = strokes.isNotEmpty() || selectedVendorRegion != null
+                        if (size.width == 0 || size.height == 0 || !hasSelection) return@Button
                         val maskBitmap = buildMaskBitmap(bitmap, strokes, size)
+                        selectedVendorRegion?.let { vendor ->
+                            AndroidCanvas(maskBitmap).drawRect(
+                                vendor.region.left * bitmap.width,
+                                vendor.region.top * bitmap.height,
+                                vendor.region.right * bitmap.width,
+                                vendor.region.bottom * bitmap.height,
+                                AndroidPaint().apply { color = android.graphics.Color.WHITE }
+                            )
+                        }
                         isProcessing = true
                         scope.launch {
                             val result = Inpainter.inpaint(bitmap, maskBitmap)
                             baseBitmap = result
                             strokes.clear()
+                            selectedVendorRegion = null
                             isProcessing = false
                         }
                     },
-                    enabled = strokes.isNotEmpty() && !isProcessing,
+                    enabled = (strokes.isNotEmpty() || selectedVendorRegion != null) && !isProcessing,
                     modifier = Modifier.weight(1f)
                 ) {
                     Text(if (isProcessing) stringResource(R.string.erasing) else stringResource(R.string.erase))
@@ -399,6 +445,81 @@ private fun MetadataCard(findings: MetadataFindings, modifier: Modifier = Modifi
                     modifier = Modifier.padding(top = 6.dp)
                 )
             }
+        }
+    }
+}
+
+@Composable
+private fun VendorWatermarkCard(
+    detected: VendorWatermark?,
+    selected: VendorWatermark?,
+    pickerExpanded: Boolean,
+    onSetPickerExpanded: (Boolean) -> Unit,
+    onSelect: (VendorWatermark) -> Unit,
+    onClear: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Card(modifier = modifier.fillMaxWidth()) {
+        Column(modifier = Modifier.padding(12.dp)) {
+            if (selected != null) {
+                Text(
+                    stringResource(R.string.vendor_area_selected, selected.displayName),
+                    style = MaterialTheme.typography.labelLarge
+                )
+                Text(
+                    stringResource(R.string.vendor_area_hint),
+                    style = MaterialTheme.typography.bodySmall,
+                    modifier = Modifier.padding(top = 2.dp, bottom = 6.dp)
+                )
+                OutlinedButton(onClick = onClear) { Text(stringResource(R.string.vendor_clear_area)) }
+            } else {
+                if (detected != null) {
+                    Text(
+                        stringResource(R.string.vendor_detected, detected.displayName),
+                        style = MaterialTheme.typography.labelLarge,
+                        modifier = Modifier.padding(bottom = 6.dp)
+                    )
+                    Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                        Button(onClick = { onSelect(detected) }) {
+                            Text(stringResource(R.string.vendor_highlight_area))
+                        }
+                        Box {
+                            OutlinedButton(onClick = { onSetPickerExpanded(true) }) {
+                                Text(stringResource(R.string.vendor_not_this))
+                            }
+                            VendorDropdown(pickerExpanded, onSetPickerExpanded, onSelect)
+                        }
+                    }
+                } else {
+                    Text(
+                        stringResource(R.string.vendor_not_detected),
+                        style = MaterialTheme.typography.labelLarge,
+                        modifier = Modifier.padding(bottom = 6.dp)
+                    )
+                    Box {
+                        OutlinedButton(onClick = { onSetPickerExpanded(true) }) {
+                            Text(stringResource(R.string.vendor_choose_manually))
+                        }
+                        VendorDropdown(pickerExpanded, onSetPickerExpanded, onSelect)
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun VendorDropdown(
+    expanded: Boolean,
+    onSetExpanded: (Boolean) -> Unit,
+    onSelect: (VendorWatermark) -> Unit
+) {
+    DropdownMenu(expanded = expanded, onDismissRequest = { onSetExpanded(false) }) {
+        for (vendor in VendorWatermarks.KNOWN) {
+            DropdownMenuItem(
+                text = { Text(vendor.displayName) },
+                onClick = { onSelect(vendor) }
+            )
         }
     }
 }
