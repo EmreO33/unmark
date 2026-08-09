@@ -117,18 +117,14 @@ on your device. See [PRIVACY.md](PRIVACY.md) for the full policy.
 ## FAQ
 
 **Does Unmark remove invisible AI watermarks like SynthID?**
-No. See the "Unmark does NOT" list in [About](#about) above, it only removes what you paint over on the visible
-pixels, plus embedded metadata tags. Invisible pixel-level watermarking is a different, much
-harder problem that isn't in scope for this app (see [How it works](#how-it-works) for why).
+For now, No. Unmark cannot remove invisible AI watermarks. This is because Google (Maintainer of SynthID) puts random *invisible* pixels to throw anyone of from trying to do this. This can be possible with AI models,(https://github.com/wiltodelta/remove-ai-watermarks) but an android phone isn't powerful enough to run a model like this and someone hasn't trained a model for this. If someone did train a AI model that could remove invisible pixels and it would be lightweight enough to run on a phone, I would be glad to add that feature. 
 
 **Is using this legal?**
 Yes, for photos you have the rights to, which is the whole point: editing a photo you generated
 or own is your call to make. Unmark doesn't circumvent any copy protection or DRM.
 
 **Why isn't this on Google Play?**
-It's not submitted there. Unmark is FOSS under GPL-3.0-or-later, and F-Droid (an app store for
-free/open-source Android apps, built entirely from public source) is the natural home for that,
-not the Play Store.
+Due to the nature of it being FOSS, I didn't release it on Google Play *yet*. Even if I do, I promise to not add, Ads or Trackers. 
 
 **Is it on F-Droid yet?**
 Not yet, a submission is in review. See [Installation → F-Droid](#f-droid) for the current status.
