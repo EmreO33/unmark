@@ -117,7 +117,7 @@ on your device. See [PRIVACY.md](PRIVACY.md) for the full policy.
 ## FAQ
 
 **Does Unmark remove invisible AI watermarks like SynthID?**
-For now, No. Unmark cannot remove invisible AI watermarks. This is because Google (Maintainer of SynthID) puts random *invisible* pixels to throw anyone of from trying to do this. This can be possible with AI models,(https://github.com/wiltodelta/remove-ai-watermarks) but an android phone isn't powerful enough to run a model like this and someone hasn't trained a model for this. If someone did train a AI model that could remove invisible pixels and it would be lightweight enough to run on a phone, I would be glad to add that feature. 
+For now, No. Unmark cannot remove invisible AI watermarks. This is because Google (Maintainer of SynthID) puts random *invisible* pixels to throw anyone of from trying to do this. This can be possible with AI models: (https://github.com/wiltodelta/remove-ai-watermarks) but an android phone isn't powerful enough to run a model like this and someone hasn't trained a model for this. If someone did train a AI model that could remove invisible pixels and it would be lightweight enough to run on a phone, I would be glad to add that feature. 
 
 **Is using this legal?**
 Yes, for photos you have the rights to, which is the whole point: editing a photo you generated
