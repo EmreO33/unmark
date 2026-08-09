@@ -114,6 +114,52 @@ on your device. See [PRIVACY.md](PRIVACY.md) for the full policy.
 - Image processing: custom, pure-Kotlin (no OpenCV, no TensorFlow Lite, no native code)
 - Min SDK: 29 (Android 10), Target SDK: 34
 
+## FAQ
+
+**Does Unmark remove invisible AI watermarks like SynthID?**
+No. See the "Unmark does NOT" list in [About](#about) above, it only removes what you paint over on the visible
+pixels, plus embedded metadata tags. Invisible pixel-level watermarking is a different, much
+harder problem that isn't in scope for this app (see [How it works](#how-it-works) for why).
+
+**Is using this legal?**
+Yes, for photos you have the rights to, which is the whole point: editing a photo you generated
+or own is your call to make. Unmark doesn't circumvent any copy protection or DRM.
+
+**Why isn't this on Google Play?**
+It's not submitted there. Unmark is FOSS under GPL-3.0-or-later, and F-Droid (an app store for
+free/open-source Android apps, built entirely from public source) is the natural home for that,
+not the Play Store.
+
+**Is it on F-Droid yet?**
+Not yet, a submission is in review. See [Installation → F-Droid](#f-droid) for the current status.
+
+**Does it need internet access?**
+No, and it can't ask for it: Unmark has no network permission at all. Every step, picking a photo,
+erasing, saving, runs entirely on your device.
+
+**Will it work on my phone?**
+If it's running Android 10 (API 29) or newer, yes. Older devices aren't supported (see
+[Permissions](#permissions) for why that specific cutoff was chosen).
+
+**Can it process a whole folder of photos at once?**
+Not yet, batch processing is on the list but not built (see [Features](#features)).
+
+**Can it find watermarks automatically?**
+No, brush selection is manual only right now. Auto-detecting known vendor watermarks is a
+possible future feature, but isn't built yet.
+
+**Why does the erased area look a bit smudgy on busy backgrounds?**
+Unmark uses a lightweight nearest-fill and smoothing algorithm, not an AI model, see
+[How it works](#how-it-works) for the tradeoff that comes with keeping the app small and
+dependency-free. It works best on small marks over fairly uniform backgrounds.
+
+**Does Unmark collect any data or analytics?**
+No. See [Privacy](#privacy) and [PRIVACY.md](PRIVACY.md).
+
+**Found a bug or want a feature?**
+Open an [issue](https://github.com/EmreO33/unmark/issues). See [Contributing](#contributing)
+below.
+
 ## Contributing
 
 Contributions are welcome! Please read [CONTRIBUTING.md](CONTRIBUTING.md) before opening a PR.
