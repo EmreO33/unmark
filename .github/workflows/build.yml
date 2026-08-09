@@ -9,8 +9,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
     steps:
       - uses: actions/checkout@v4
 
@@ -52,12 +50,3 @@ jobs:
         with:
           name: unmark-apk
           path: app/build/outputs/apk/release/Unmark.apk
-
-      - name: Publish latest build to Releases
-        if: github.event_name == 'push'
-        uses: softprops/action-gh-release@v2
-        with:
-          tag_name: latest
-          name: Latest build
-          prerelease: false
-          files: app/build/outputs/apk/release/Unmark.apk

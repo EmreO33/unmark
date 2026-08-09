@@ -44,10 +44,11 @@ Not yet submitted/published. Metadata and submission steps are prepared in
 
 ### Manual APK
 
-Every push builds a signed release APK named `Unmark.apk` automatically and publishes it to the
-[Releases page](https://github.com/EmreO33/unmark/releases) under the `latest` tag. Tagged versions
-(e.g. `v0.2.0`) get their own dedicated release. CI signs with a project-only key kept as GitHub
-Actions secrets, never committed to this repo.
+Tagged versions (e.g. `v0.2.2`) get their own dedicated, signed release on the
+[Releases page](https://github.com/EmreO33/unmark/releases). CI signs with a project-only key
+kept as GitHub Actions secrets, never committed to this repo. Every push also builds an APK for
+verification, downloadable from the corresponding [Actions](https://github.com/EmreO33/unmark/actions)
+run as a build artifact, but that one isn't published as a release.
 
 ## Building from source
 
