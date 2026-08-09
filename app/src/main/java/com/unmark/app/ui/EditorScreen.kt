@@ -477,6 +477,11 @@ private fun VendorWatermarkCard(
                     Text(
                         stringResource(R.string.vendor_detected, detected.displayName),
                         style = MaterialTheme.typography.labelLarge,
+                        modifier = Modifier.padding(bottom = 2.dp)
+                    )
+                    Text(
+                        stringResource(R.string.vendor_disclaimer),
+                        style = MaterialTheme.typography.bodySmall,
                         modifier = Modifier.padding(bottom = 6.dp)
                     )
                     Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -570,6 +575,12 @@ private fun EmptyState(padding: PaddingValues, onPick: () -> Unit) {
             Button(onClick = onPick, modifier = Modifier.padding(top = 16.dp)) {
                 Text(stringResource(R.string.pick_image))
             }
+            Text(
+                stringResource(R.string.empty_state_batch_hint),
+                style = MaterialTheme.typography.bodySmall,
+                textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+                modifier = Modifier.padding(top = 16.dp)
+            )
         }
     }
 }

@@ -43,7 +43,7 @@ object VendorWatermarks {
         VendorWatermark(
             id = "google_imagefx",
             displayName = "Google (ImageFX / Gemini)",
-            region = NormalizedRect(0.85f, 0.90f, 1.00f, 1.00f),
+            region = NormalizedRect(0.62f, 0.78f, 1.00f, 1.00f),
             signatures = listOf("google ai", "imagefx", "gemini", "made with google ai")
         ),
         VendorWatermark(

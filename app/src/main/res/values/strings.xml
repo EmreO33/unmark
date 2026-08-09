@@ -13,6 +13,7 @@
     <string name="brush_size">Brush size</string>
     <string name="start_over">Start over</string>
     <string name="no_image_selected">No photo selected yet</string>
+    <string name="empty_state_batch_hint">Got several photos with the same watermark? Batch process is in the menu at top left.</string>
 
     <string name="metadata_clean">No embedded metadata found in this photo.</string>
     <string name="metadata_found_prefix">Found in this photo:</string>
@@ -34,8 +35,9 @@
     <string name="vendor_highlight_area">Highlight area</string>
     <string name="vendor_not_this">Not this?</string>
     <string name="vendor_choose_manually">Choose vendor manually</string>
+    <string name="vendor_disclaimer">Rough guess based on where this vendor usually places it, it might miss the mark entirely. The brush is more reliable, use this as a starting point and touch up with the brush before erasing.</string>
     <string name="vendor_area_selected">%1$s area selected</string>
-    <string name="vendor_area_hint">Approximate placement, adjust with the brush if needed before erasing</string>
+    <string name="vendor_area_hint">Approximate placement, it might not fully cover the watermark. Adjust or add to it with the brush before erasing, the brush alone is more reliable.</string>
     <string name="vendor_clear_area">Clear selection</string>
 
     <string name="batch_title">Batch process</string>
