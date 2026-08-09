@@ -1,0 +1,1 @@
+Removed automatic vendor watermark detection, it was unreliable. Batch process now works by drawing one watermark box on a preview photo and reusing it across the whole batch, instead of guessing a vendor's watermark position.

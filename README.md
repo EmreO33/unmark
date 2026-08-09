@@ -28,8 +28,7 @@ In recent years, generative AI's have been on a high. Misinformation on the inte
 - [x] Automatic metadata stripping (EXIF, XMP, possible C2PA content credentials) on save, with an
       on-pick scan showing you what was found before it's gone
 - [x] No ads, no trackers, no analytics
-- [x] Batch processing: apply one watermark region to many photos at once
-- [x] Auto-detection of known vendor watermarks (heuristic, EXIF/metadata based), with manual brush still available for anything else
+- [x] Batch processing: draw one watermark region once, apply it to many photos at once
 
 ## Stance on AI
 
@@ -139,19 +138,17 @@ If it's running Android 10 (API 29) or newer, yes. Older devices aren't supporte
 [Permissions](#permissions) for why that specific cutoff was chosen).
 
 **Can it process a whole folder of photos at once?**
-Yes, use the hamburger menu's Batch process option: pick several photos, pick a watermark area
-(auto-detect per photo, or a fixed vendor), and it erases and saves all of them in one pass.
-Best when every photo in the batch shares the same watermark placement, like a set of exports
-from the same generator.
+Yes, use the hamburger menu's Batch process option: pick several photos, drag one box around the
+watermark on a preview of the first photo, and it erases that same area from every photo in the
+batch and saves them all. Best when every photo in the batch shares the same watermark placement,
+like a set of exports from the same app or site.
 
 **Can it find watermarks automatically?**
-Partially: Unmark recognizes a handful of known generator watermark positions (Bing Image
-Creator, Meta AI, Google ImageFX/Gemini, Adobe Firefly, Playground AI, Leonardo.Ai, Craiyon) by
-scanning EXIF and embedded metadata for that vendor's signature, then suggests the region it
-usually appears in. This is a heuristic, not a guarantee, positions are approximate and the
-metadata it relies on is often stripped by the time a photo reaches you (see
-[Privacy](#privacy)). Manual brush selection is still there and still the reliable fallback for
-anything it doesn't recognize.
+No, Unmark doesn't try to detect or recognize watermarks. You always tell it where to erase,
+either by painting over a mark by hand, or, for batches, by drawing one box that's reused across
+every photo. That's a deliberate choice: automatic guesses at watermark position were unreliable
+in practice (too small, wrong spot) and gave a false sense of "it just works" when the brush is
+what's actually dependable.
 
 **Why does the erased area look a bit smudgy on busy backgrounds?**
 Unmark uses a lightweight nearest-fill and smoothing algorithm, not an AI model, see
