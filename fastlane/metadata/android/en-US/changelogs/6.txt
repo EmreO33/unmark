@@ -1,0 +1,1 @@
+Widened the suggested Google (ImageFX/Gemini) watermark area so it actually covers the watermark, and added a clearer disclaimer that vendor auto-select is a rough guess, use the brush for reliable results.
